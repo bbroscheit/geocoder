@@ -2,3 +2,17 @@ AIzaSyAFY4jY1E6VePdwDAkSAJLpbkx-WFoJ5es
 
 apikey google platforms
 AIzaSyAjY45zjk2pXQCGyL5MhThwW2qofufkcI4
+
+// Alternatively
+
+// Set Google Maps Geocoding API key for quota management (optional but recommended).
+// Use this if you want to set the API key independently.
+setKey("AIzaSyAFY4jY1E6VePdwDAkSAJLpbkx-WFoJ5es"); // Your API key here.
+
+// Set default response language (optional).
+// This sets the default language for geocoding responses.
+setLanguage("es"); // Default language for responses.
+
+// Set default response region (optional).
+// This sets the default region for geocoding responses.
+setRegion("es"); // Default region for responses.

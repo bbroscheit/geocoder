@@ -17,12 +17,11 @@ const { key } = process.env
 console.log("key" , key)
 
 setDefaults({
-  key: key, // Your API key here.
-  language: "es", // Default language for responses.
-  // region: "es", // Default region for responses.
+  key: "AIzaSyAFY4jY1E6VePdwDAkSAJLpbkx-WFoJ5es", 
+  // region: "es", // Venia por default pero encasilla la busqueda en un pais determinado
 });
 
-// // Get latitude & longitude from address.
+// Devuelve la latitud y la longitud desde la direccion, la direccion debe ser lo mas completa posible, si hay mas de una opcion que coincida el mapa no muestra resultado
 // fromAddress("camino de cintura 7024")
 //   .then(({ results }) => {
 //     const { lat, lng } = results[0].geometry.location;
@@ -30,21 +29,15 @@ setDefaults({
 //   })
 //   .catch(console.error);
 
-// // Get address from latitude & longitude.
-// fromLatLng(-34.7109232 - 58.52653069999999)
+
+// devuelve la direccion partiendo de las latitudes y longitudes
+// geocode(RequestType.LATLNG, "-34.7109232 -58.52653069999999")
 //   .then(({ results }) => {
-//     const { lat, lng } = results[0].geometry.location;
-//     console.log(" from lat, lgn ", lat, lng);
+//     const address = results[0].formatted_address;
+//     console.log(address);
 //   })
 //   .catch(console.error);
 
-// // Alternatively, use geocode function for consistency
-// // geocode(RequestType.ADDRESS, "camino de cintura 7024")
-// //   .then(({ results }) => {
-// //     const { lat, lng } = results[0].geometry.location;
-// //     console.log("from lat lng consistency", lat, lng);
-// //   })
-// //   .catch(console.error);
 
 function Home() {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -54,10 +47,13 @@ function Home() {
   let mapOptions = "";
 
   const libraries = useMemo(() => ["places"], []);
-  const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]);
+  
+  // centra el mapa en las latitudes y longitudes de la busqueda
+  const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]); 
 
+  // carga el script de la API y nos devuelve si se cargo correctamente o no
   const {isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: key,
+    googleMapsApiKey: "AIzaSyAFY4jY1E6VePdwDAkSAJLpbkx-WFoJ5es",
     libraries: libraries,
     onLoad: () => {
       setIsMapLoaded(true);
@@ -71,6 +67,7 @@ function Home() {
     });
   }
 
+  // busca y devuelve las longitudes y latitudes segun una direccion y las setea en los estados correspondientes para renderizar en el mapa
   function geocodeAddress(e) {
     e.preventDefault();
     
@@ -93,6 +90,7 @@ function Home() {
     
  }
 
+ // si el script cargo correctamente se guardan las preferencias de mapa, si esto no se hace verificando la carga del script tira error de "google is undefined"
   useEffect(() => {
     if (isLoaded) {
       mapOptions =
@@ -107,8 +105,7 @@ function Home() {
     }
   }, [isLoaded]);
 
-  console.log("lat y lgn", lat, lng)
-
+  
   return (
     <div className={styles.homeWrapper}>
       <div>

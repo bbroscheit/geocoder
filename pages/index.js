@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 import React from "react";
 import { useMemo, useState, useEffect } from "react";
 import { useLoadScript, GoogleMap, MarkerF } from "@react-google-maps/api";
@@ -12,12 +10,10 @@ import {
   RequestType,
 } from "react-geocode";
 
-const { key } = process.env
-
-console.log("key" , key)
+const KEY = process.env.NEXT_PUBLIC_KEY
 
 setDefaults({
-  key: "AIzaSyAFY4jY1E6VePdwDAkSAJLpbkx-WFoJ5es", 
+  key: KEY, 
   // region: "es", // Venia por default pero encasilla la busqueda en un pais determinado
 });
 
@@ -53,7 +49,7 @@ function Home() {
 
   // carga el script de la API y nos devuelve si se cargo correctamente o no
   const {isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAFY4jY1E6VePdwDAkSAJLpbkx-WFoJ5es",
+    googleMapsApiKey: KEY,
     libraries: libraries,
     onLoad: () => {
       setIsMapLoaded(true);
